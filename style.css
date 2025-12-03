@@ -1,0 +1,482 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #eef6fb;
+}
+
+/* Header */
+.topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 60px;
+  background: #357ABD;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 1000;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: transform 0.4s ease, opacity 0.3s ease;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  height: 60px; /* même hauteur que le header */
+}
+
+.logo img {
+  height: 48px;         /* ✅ taille visuelle idéale */
+  width: auto;          /* garde les proportions */
+  object-fit: contain;  /* évite les déformations */
+  padding: 4px 0;
+}
+
+
+
+/* Search: compact → expands on focus */
+.search-bar {
+  width: 120px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: none;
+  transition: width 0.4s ease, box-shadow 0.3s ease;
+}
+.search-bar:focus {
+  width: 260px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.3);
+  outline: none;
+}
+
+/* Hamburger base */
+.hamburger {
+  width: 30px;
+  height: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+.hamburger span {
+  width: 100%;
+  height: 4px;
+  background: #fff;
+  border-radius: 2px;
+  transition: all 0.4s ease;
+}
+
+/* Quand menu est ouvert → transforme en X */
+.hamburger.open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.hamburger.open span:nth-child(2) {
+  opacity: 0; /* barre du milieu disparaît */
+}
+.hamburger.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+
+/* Overlay menu: open via class (smooth & reliable) */
+/* Overlay menu */
+.overlay-menu {
+  position: fixed;
+  top: 60px; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(180deg, #eef6fb, #ffffff);
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  z-index: 999;
+  padding: 40px 20px;
+  overflow-y: auto;   /* ✅ scroll interne */
+}
+.overlay-menu.open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+
+
+/* Menu list */
+.main-menu {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 640px;
+}
+.main-menu > li { margin-bottom: 18px; }
+
+/* Aspect cards */
+.menu-toggle {
+  width: 100%;
+  background: #fff;
+  border: none;
+  font-size: 1.2rem;
+  color: #357ABD;
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 16px 18px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+.menu-toggle:hover {
+  background: #eef4ff;
+  transform: translateX(4px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+}
+.icon { font-size: 1.3rem; }
+.arrow {
+  font-size: 1.1rem;
+  color: #555;
+  transition: transform 0.25s ease;
+}
+li.expanded .arrow { transform: rotate(90deg); }
+
+/* Submenu (smooth slide) */
+.submenu {
+  list-style: none;
+  margin: 8px 0 0 34px;
+  padding: 0;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.35s ease, opacity 0.35s ease;
+}
+li.expanded .submenu {
+  max-height: 320px;
+  opacity: 1;
+}
+.submenu li { margin-bottom: 10px; }
+.submenu-link {
+  display: inline-block;
+  font-size: 1rem;
+  color: #2b2b2b;
+  background: #fff;
+  border: 1px solid #e6eef8;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+.submenu-link:hover {
+  background: #dce9f9;
+  transform: translateX(4px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+}
+
+/* Hero */
+.hero {
+  height: 75vh;
+  background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') center/cover no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+}
+.hero-text {
+  background: rgba(53,122,189,0.82);
+  padding: 28px;
+  border-radius: 10px;
+  animation: fadeIn 1s ease;
+}
+.hero-text h1 { font-size: 2.4rem; margin-bottom: 10px; }
+.hero-text p { font-size: 1.15rem; margin-bottom: 18px; }
+.cta {
+  background: #FFD700;
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Content */
+main { margin-top: 80px; padding: 40px; }
+section { margin-bottom: 60px; animation: fadeIn 0.8s ease; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Footer */
+.footer {
+  background: #357ABD;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+}
+.footer-don {
+  display: inline-block;
+  margin-top: 10px;
+  background: #FFD700;
+  color: #000;
+  padding: 8px 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: 60px; /* sous le header */
+  left: 0;
+  width: 60px; /* étroite par défaut */
+  height: calc(100vh - 60px);
+  background: #357ABD;
+  box-shadow: 2px 0 6px rgba(0,0,0,0.2);
+  z-index: 900;
+  transition: width 0.4s ease;
+  overflow-x: hidden;
+}
+.sidebar:hover {
+  width: 200px; /* s’élargit au hover */
+}
+
+.sidebar ul {
+  list-style: none;
+  margin: 0;
+  padding: 20px 0;
+}
+.sidebar li {
+  margin-bottom: 15px;
+}
+.sidebar a {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  text-decoration: none;
+  padding: 12px;
+  border-radius: 6px;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+.sidebar a:hover {
+  background: #285a8e;
+  transform: translateX(5px);
+}
+
+/* Icônes toujours visibles */
+.sidebar .icon {
+  font-size: 1.4rem;
+  margin-right: 12px;
+}
+
+/* Labels cachés par défaut */
+.sidebar .label {
+  opacity: 0;
+  white-space: nowrap;
+  transition: opacity 0.3s ease;
+}
+
+/* Quand sidebar élargie → labels visibles */
+.sidebar:hover .label {
+  opacity: 1;
+}
+
+/* Décale le contenu principal */
+main, .hero, .footer {
+  margin-left: 80px; /* espace quand sidebar fermée */
+  transition: margin-left 0.4s ease;
+}
+.sidebar:hover ~ main,
+.sidebar:hover ~ .hero,
+.sidebar:hover ~ .footer {
+  margin-left: 220px; /* espace quand sidebar ouverte */
+}
+section {
+  scroll-margin-top: 70px; /* hauteur du header + un petit espace */
+}
+/* Section Présentation */
+#presentation {
+  max-width: 900px;          /* largeur confortable */
+  margin: 100px auto;        /* centré avec espace en haut */
+  padding: 40px;
+  background: #ffffff;       /* fond blanc pour la lisibilité */
+  border-radius: 12px;       /* coins arrondis */
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1); /* ombre douce */
+  font-family: 'Segoe UI', sans-serif;
+  line-height: 1.7;
+  color: #333;
+}
+
+#presentation h2 {
+  font-size: 2rem;
+  color: #357ABD;            /* bleu cohérent avec ton site */
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+#presentation p {
+  font-size: 1.1rem;
+  margin-bottom: 18px;
+  text-align: justify;       /* texte bien aligné */
+}
+
+#presentation strong {
+  color: #d35400;            /* mettre en valeur certains mots */
+}
+
+#presentation em {
+  color: #555;
+  font-style: italic;
+}
+
+
+
+/* Bandeau décoratif */
+#presentation::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 8px;
+  background: linear-gradient(90deg, #357ABD, #f39c12, #e74c3c, #2ecc71);
+}
+
+
+/* Effet battement au survol */
+#presentation:hover {
+  animation: heartbeat 1.5s infinite;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+}
+
+/* Vagues lumineuses extérieures */
+#presentation:hover::before,
+#presentation:hover::after {
+  content: "";
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 120%; height: 120%; /* ✅ plus grand que la boîte */
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  background: radial-gradient(circle, rgba(255,215,0,0.4) 0%, transparent 70%);
+  animation: wave 3s infinite;
+  z-index: -1;
+}
+
+/* Deux vagues décalées pour effet continu */
+#presentation:hover::after {
+  animation-delay: 1.5s;
+}
+
+/* Animation battement */
+@keyframes heartbeat {
+  0%   { transform: scale(1); }
+  14%  { transform: scale(1.05); }
+  28%  { transform: scale(1); }
+  42%  { transform: scale(1.05); }
+  70%  { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+
+/* Animation vagues lumineuses */
+@keyframes wave {
+  0%   { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+  50%  { transform: translate(-50%, -50%) scale(2); opacity: 0.4; }
+  100% { transform: translate(-50%, -50%) scale(3); opacity: 0; }
+}
+/* Empêche le scroll horizontal */
+html, body {
+  overflow-x: hidden; /* empêche le scroll horizontal */
+  overflow-y: auto;   /* garde le scroll vertical normal */
+}
+
+#presentation {
+  overflow: hidden;   /* ✅ empêche les animations de créer une barre verticale */
+}
+#presentation {
+  position: relative; /* ✅ nécessaire pour que les cœurs sortent de cette boîte */
+  max-width: 900px;
+  margin: 100px auto;
+  padding: 50px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+/* Conteneur des cœurs */
+.hearts {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* Style des cœurs */
+.hearts span {
+  position: absolute;
+  font-size: 24px;
+  opacity: 0;
+}
+
+/* Animation au survol */
+#presentation:hover .hearts span:nth-child(1) {
+  animation: float1 3s forwards;
+}
+#presentation:hover .hearts span:nth-child(2) {
+  animation: float2 3s forwards;
+}
+#presentation:hover .hearts span:nth-child(3) {
+  animation: float3 3s forwards;
+}
+#presentation:hover .hearts span:nth-child(4) {
+  animation: float4 3s forwards;
+}
+#presentation:hover .hearts span:nth-child(5) {
+  animation: float5 3s forwards;
+}
+
+/* Animations différentes */
+@keyframes float1 {
+  0% { transform: translate(0,0) rotate(0deg); opacity: 1; }
+  100% { transform: translate(-80px,-200px) rotate(180deg); opacity: 0; }
+}
+@keyframes float2 {
+  0% { transform: translate(0,0) rotate(0deg); opacity: 1; }
+  100% { transform: translate(60px,-220px) rotate(-90deg); opacity: 0; }
+}
+@keyframes float3 {
+  0% { transform: translate(0,0) rotate(0deg); opacity: 1; }
+  100% { transform: translate(-40px,-180px) rotate(360deg); opacity: 0; }
+}
+@keyframes float4 {
+  0% { transform: translate(0,0) rotate(0deg); opacity: 1; }
+  100% { transform: translate(100px,-250px) rotate(270deg); opacity: 0; }
+}
+@keyframes float5 {
+  0% { transform: translate(0,0) rotate(0deg); opacity: 1; }
+  100% { transform: translate(-120px,-230px) rotate(450deg); opacity: 0; }
+}
+
+/* Conteneur logo + nom */
+.logo-container {
+  display: flex;
+  align-items: center;   /* aligne verticalement */
+  gap: 12px;             /* espace entre logo et texte */
+}
+
+/* Logo */
+.logo-container img {
+  height: 50px;          /* ajuste la taille du logo */
+  width: auto;
+}
+
+/* Nom du site */
+.site-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #357ABD;         /* bleu cohérent avec ton thème */
+  letter-spacing: 1px;
+}
